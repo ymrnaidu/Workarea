@@ -1,6 +1,7 @@
 ### welcome_assignment_answers
 ### Input - All eight questions given in the assignment.
 ### Output - The right answer for the specific question.
+#!/usr/bin/python
 
 answer = ""
 def welcome_assignment_answers(question):
