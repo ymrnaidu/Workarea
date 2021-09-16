@@ -2,7 +2,7 @@
 ### Input - All eight questions given in the assignment.
 ### Output - The right answer for the specific question.
 #!/usr/bin/python
-answer = "yes"
+answer = ""
 
 def welcome_assignment_answers(question):
     #The student doesn't have to follow the skeleton for this assignment.
@@ -26,7 +26,7 @@ def welcome_assignment_answers(question):
     elif question ==  "What layer from the TCP/IP model the protocol DHCP belongs to? ":
         answer = 7
     elif question ==  "What layer of the TCP/IP model the protocol TCP belongs to? ":
-        answer = 4
+        answer = 2
     return(answer)
 # Complete all the questions.
 
