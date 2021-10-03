@@ -75,5 +75,7 @@ def smtp_client(port, mailserver):
     
     
 if __name__ == '__main__':
-    smtp_client(25, 'smtp.nyu.edu')
+    #smtp_client(25, 'smtp.nyu.edu')
+    smtp_client(1025, '127.0.0.1')
+
 
