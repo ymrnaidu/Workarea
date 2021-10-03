@@ -2,7 +2,7 @@ from socket import *
 import base64
 import time
 
-def smtp_client(port, mailserver):
+def smtp_client(port=1025, mailserver='127.0.0.1'):
     msg = "\r\n Madhu's SMTP homework"
     endmsg = "\r\n.\r\n"
 
@@ -55,7 +55,7 @@ def smtp_client(port, mailserver):
     clientSocket.send(subject.encode())
     mailmsg = "Input here message: \r\n"
     clientSocket.send(mailmsg.encode())
-    clientSocket.send(endmsg.encode())
+    #clientSocket.send(endmsg.encode())
     recv_msg = clientSocket.recv(1024).decode()
     #print(recv_msg)
     # Fill in end
