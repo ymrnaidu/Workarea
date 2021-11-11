@@ -13,10 +13,7 @@ rtt_cnt = 0
 rtt_min = 0
 rtt_max = 0
 rtt_sum = 0
-packet_min = 0
-packet_avg = 0
-packet_max = 0
-stdev_var = 0
+
 
 def checksum(string):
     csum = 0
@@ -128,7 +125,11 @@ def doOnePing(destAddr, timeout):
 
 
 def ping(host, timeout=1):
-    packet_min, packet_max, packet_avg
+    global packet_min, packet_max, packet_avg
+    packet_min = 0
+    packet_avg = 0
+    packet_max = 0
+    #stdev_var = 0
     # timeout=1 means: If one second goes by without a reply from the server,  	# the client assumes that either the client's ping or the server's pong is lost
     dest = gethostbyname(host)
     print("Pinging " + dest + " using Python:")
@@ -142,7 +143,7 @@ def ping(host, timeout=1):
         delay = doOnePing(dest, timeout)
         print(delay)
         time.sleep(1)  # one second
-    print(vars)    
+      
     return vars
 
 if __name__ == '__main__':
