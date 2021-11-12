@@ -13,7 +13,10 @@ rtt_cnt = 0
 rtt_min = 0
 rtt_max = 0
 rtt_sum = 0
-
+packet_min = 0
+packet_avg = 0
+packet_max = 0
+pstdev_var = 0
 
 def checksum(string):
     csum = 0
@@ -54,25 +57,13 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 
         # Fill in start
         # Fetch the ICMP header from the IP packet
-        type, code, checksum, id, seq = struct.unpack('bbHHh', recPacket[20:28])
-        if type != 0:
-            return 'expected type=0, and received {}'.format(type)
-        if code != 0:
-            return 'expected code=0, and received {}'.format(code)
-        if ID != id:
-            return 'expected id={}, and received {}'.format(ID, id)
-	
-        send_time,  = struct.unpack('d', recPacket[28:])
-        rtt = (timeReceived - send_time) * 1000
-        rtt_cnt += 1
-        rtt_sum += rtt
-        rtt_min = min(rtt_min, rtt)
-        rtt_max = max(rtt_max, rtt)
-        
-        ip_header = struct.unpack('!BBHHHBBH4s4s' , recPacket[:20])
-        ttl = ip_header[5]
-        saddr = inet_ntoa(ip_header[8])
-        length = len(recPacket) - 20
+        icmpHeader = recPacket[20:28]
+        icmpType, code, mychecksum, packetID, sequence = struct.unpack("bbHHh", icmpHeader)
+    
+        if type != 8 and packetID == ID:
+            bytesInDouble = struct.calcsize("d")
+            timeSent = struct.unpack("d", recPacket[28:28 + bytesInDouble])[0]
+            return timeReceived - timeSent
 
         return '{} bytes from {}: icmp_seq={} ttl={} time={:.3f} ms'.format(length, saddr, seq, ttl, rtt)
 	# Fill in end
@@ -126,10 +117,7 @@ def doOnePing(destAddr, timeout):
 
 def ping(host, timeout=1):
     global packet_min, packet_max, packet_avg, pstdev_var
-    packet_min = 0
-    packet_avg = 0
-    packet_max = 0
-    pstdev_var = 0
+
     # timeout=1 means: If one second goes by without a reply from the server,  	# the client assumes that either the client's ping or the server's pong is lost
     dest = gethostbyname(host)
     print("Pinging " + dest + " using Python:")
@@ -144,9 +132,9 @@ def ping(host, timeout=1):
         print(delay)
         time.sleep(1)  # one second
     
-    return vars  
-    return delay
-
+    return vars
+    return dealy
+    
 if __name__ == '__main__':
     ping("google.co.il")
     #vars = [str(round(packet_min, 2))] 
