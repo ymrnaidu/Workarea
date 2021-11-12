@@ -14,8 +14,8 @@ rtt_min = 0
 rtt_max = 0
 rtt_sum = 0
 packet_min = 0
-packet_avg = 0
-packet_max = 0.0
+packet_avg = 0.0
+packet_max = 0
 stdev_var = 0.0
 
 def checksum(string):
