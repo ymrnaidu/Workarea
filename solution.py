@@ -141,7 +141,7 @@ def ping(host, timeout=1):
     #print(packet_avg)
     stdev_var = statistics.stdev(delay)
     #print(stdev_var)
-    vars = [float(round(packet_min,0)), float(round(packet_avg,2)), float(round(packet_max,0)), float(round(stdev_var,2))]
+    vars = [float(round(packet_min,2)), float(round(packet_avg,2)), float(round(packet_max,2)), float(round(stdev_var,2))]
     #print(vars)
     return vars
     #return delay
