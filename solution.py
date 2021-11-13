@@ -13,10 +13,10 @@ rtt_cnt = 0
 rtt_min = 0
 rtt_max = 0
 rtt_sum = 0
-packet_min = 0
-packet_avg = 0.0
-packet_max = 0
-stdev_var = 0.0
+packet_min = 0.00
+packet_avg = 0.00
+packet_max = 0.00
+stdev_var = 0.00
 
 def checksum(string):
     csum = 0
@@ -142,7 +142,7 @@ def ping(host, timeout=1):
     stdev_var = statistics.stdev(delay)
     #print(stdev_var)
     vars = [float(round(packet_min,2)), float(round(packet_avg,2)), float(round(packet_max,2)), float(round(stdev_var,2))]
-    #print(vars)
+    print(vars)
     return vars
     #return delay
     
