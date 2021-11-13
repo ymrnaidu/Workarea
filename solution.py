@@ -10,9 +10,11 @@ import statistics
 
 ICMP_ECHO_REQUEST = 8
 rtt_cnt = 0
-rtt_min = 0
+rtt_min = 1000
 rtt_max = 0
 rtt_sum = 0
+rtt = 0
+rtt_lst = []
 packet_min = 0.00
 packet_avg = 0.00
 packet_max = 0.00
@@ -42,7 +44,7 @@ def checksum(string):
 
 
 def receiveOnePing(mySocket, ID, timeout, destAddr):
-    global rtt_cnt, rtt_min, rtt_max, rtt_sum
+    global rtt_cnt, rtt_min, rtt_max, rtt_sum, rtt_lst
     timeLeft = timeout
     
     while 1:
@@ -57,15 +59,28 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 
         # Fill in start
         # Fetch the ICMP header from the IP packet
-        header = recPacket[20:28]
-        type, code, checksum, packetID, sequence = struct.unpack("bbHHh", header)
+        type, code, checksum, id, seq = struct.unpack('bbHHh', recPacket[20:28])
+        if type != 0:
+            return 'expected type=0, and received {}'.format(type)
+        if code != 0:
+            return 'expected code=0, and received {}'.format(code)
+        if ID != id:
+            return 'expected id={}, and received {}'.format(ID, id)
+	
+        send_time,  = struct.unpack('d', recPacket[28:])
+        rtt = (timeReceived - send_time) * 1000
+        rtt_cnt += 1
+        rtt_sum += rtt
+        rtt_min = min(rtt_min, rtt)
+        rtt_max = max(rtt_max, rtt)
+        rtt_lst.append(rtt)
+        
+        ip_header = struct.unpack('!BBHHHBBH4s4s' , recPacket[:20])
+        ttl = ip_header[5]
+        saddr = inet_ntoa(ip_header[8])
+        length = len(recPacket) - 20
 
-        if type == 0 and packetID == ID:
-            bytesInDouble = struct.calcsize("d")
-            timeSent = struct.unpack("d", recPacket[28:28 + bytesInDouble])[0]
-            delay = timeReceived - timeSent
-            ttl = ord(struct.unpack("c", recPacket[8:9])[0].decode())
-            return (bytesInDouble, delay, ttl)
+        return '{} bytes from {}: icmp_seq={} ttl={} time={:.3f} ms'.format(length, saddr, seq, ttl, rtt)
         
 	# Fill in end
         timeLeft = timeLeft - howLongInSelect
@@ -133,15 +148,21 @@ def ping(host, timeout=1):
         print(delay)
         #print("dest :" + dest)
         time.sleep(1)  # one second
-    packet_min = min(delay) 
-    #print(packet_min)
-    packet_max = max(delay)
-    #print(packet_max)
-    packet_avg = statistics.mean(delay)
+    #print(rtt)
+    #packet_min = min(rtt) 
+    #print(rtt_min)
+    #packet_max = max(rtt)
+    #print(rtt_max)
+    rtt_avg = rtt_sum/rtt_cnt
+    #print(rtt_avg)
+    #print(rtt_lst)
+    
+    #packet_avg = statistics.mean(delay)
     #print(packet_avg)
-    stdev_var = statistics.stdev(delay)
+    stdev_var = statistics.stdev(rtt_lst)
     #print(stdev_var)
-    vars = [float(round(packet_min,2)), float(round(packet_avg,2)), float(round(packet_max,2)), float(round(stdev_var,2))]
+    vars = [float(round(rtt_min,2)), float(round(rtt_avg,2)), float(round(rtt_max,2)), float(round(stdev_var,2))]
+    #vars = [float(round(packet_min,2)), float(round(packet_max,2))]
     print(vars)
     return vars
     #return delay
