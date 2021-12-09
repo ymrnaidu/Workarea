@@ -130,7 +130,7 @@ def get_route(hostname):
                 try: #try to fetch the hostname
                     #Fill in start
                     dest = gethostbyname(host)
-                    tracelist1.append(dest)
+                    tracelist1.append(destAddr)
                     tracelist2.append(tracelist1)
                     #print(tracelist2)
                     #Fill in end
