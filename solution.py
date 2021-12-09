@@ -130,6 +130,9 @@ def get_route(hostname):
                 try: #try to fetch the hostname
                     #Fill in start
                     dest = gethostbyname(host)
+                    tracelist1.append(dest)
+                    tracelist2.append(tracelist1)
+                    print(tracelist2)
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
@@ -158,7 +161,7 @@ def get_route(hostname):
                     #tracelist1.append(ttl,(timeReceived -t)*1000, addr[0]))
                     tracelist1.append(" %d   rtt=%.0f ms %s" % (ttl,(timeReceived -t)*1000, addr[0]))
                     tracelist2.append(tracelist1)
-                    print(tracelist2)
+                    #print(tracelist2)
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -168,6 +171,7 @@ def get_route(hostname):
                     #tracelist1.append(ttl,(timeReceived -timeSent)*1000, addr[0]))
                     tracelist1.append(" %d   rtt=%.0f ms %s" % (ttl,(timeReceived -timeSent)*1000, addr[0]))
                     tracelist2.append(tracelist1)
+                    return tracelist2
                     ##print(tracelist2)
                     #Fill in end
                 else:
@@ -181,6 +185,5 @@ def get_route(hostname):
             finally:
                 mySocket.close()
 
-get_route("www.google.com")                
-
-
+if __name__ == "__main__":
+    get_route("www.google.com")            
