@@ -133,7 +133,7 @@ def get_route(hostname):
                     dest = gethostbyaddr(addr[0])
                     tracelist1.append(dest)
                     #tracelist2.append(tracelist1)
-                    print(tracelist2)
+                    #print(tracelist2)
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
