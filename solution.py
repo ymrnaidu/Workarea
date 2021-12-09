@@ -129,17 +129,17 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    dest = gethostbyname(host)
-                    tracelist1.append(destAddr)
-                    tracelist2.append(tracelist1)
-                    #print(tracelist2)
+                    #dest = gethostbyname(host)
+                    dest = gethostbyaddr(addr[0])
+                    tracelist1.append(dest)
+                    #tracelist2.append(tracelist1)
+                    print(tracelist2)
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
                     #dest = gethostbyname("hostname not returnable”)
                     #dest = gethostbyname(host)
                     tracelist1.append("hostname not reurnable")
-                    tracelist2.append(tracelist1)
                     #print(tracelist2)
                     #Fill in end
                     
