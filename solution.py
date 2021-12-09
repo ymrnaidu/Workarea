@@ -132,7 +132,6 @@ def get_route(hostname):
                     dest = gethostbyname(host)
                     tracelist1.append(dest)
                     tracelist2.append(tracelist1)
-                    return tracelist2
                     #print(tracelist2)
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
