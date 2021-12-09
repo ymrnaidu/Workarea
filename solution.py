@@ -129,9 +129,9 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    #dest = gethostbyname(host)
-                    dest = gethostbyaddr(addr[0])
-                    tracelist1.append(dest)
+                    dest = gethostbyname(host)
+                    #dest = gethostbyaddr(addr[0])
+                    tracelist1.append(dest[0])
                     #tracelist2.append(tracelist1)
                     #print(tracelist2)
                     #Fill in end
