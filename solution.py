@@ -12,7 +12,7 @@ MAX_HOPS = 30
 TIMEOUT = 2.0
 TRIES = 1
 host = "google.com"
-dest1 = ""
+dest1 = "142.251.40.238"
 # The packet that we shall send to each router along the path is the ICMP echo
 # request packet, which is exactly what we had used in the ICMP ping exercise.
 # We shall use the same packet that we built in the Ping exercise
@@ -130,9 +130,10 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    dest = gethostbyname(host)
-                    dest1 = gethostbyaddr(dest)
-                    tracelist1.append(dest1)
+                    #dest = gethostbyname(host)
+                    #dest1 = gethostbyaddr(dest)
+                    dt = gethostbyaddr(dest1)
+                    tracelist1.append(dt)
                     #tracelist2.append(tracelist1)
                     #print(tracelist2)
                     #Fill in end
