@@ -151,7 +151,7 @@ def get_route(hostname):
                     #tracelist1.append((timeReceived -t)*1000)
                     tracelist1.append(" %d   rtt=%.0f ms %s" % (ttl,(timeReceived -t)*1000, addr[0]))
                     tracelist2.append(tracelist1)
-                    print(tracelist2)
+                    #print(tracelist2)
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
